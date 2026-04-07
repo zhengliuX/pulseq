@@ -896,6 +896,17 @@ class ExternalSequence
 	static void SetPrintFunction(PrintFunPtr fun);
 
 	/**
+	 * @brief Set arb grad sampling mode
+	 *
+	 * This will affect how we get the arbitrary gradient samples when oversampling is true.
+	 * If m_isArbGradCenterSampling is true, we use the raster center sample of the arbitrary grads, which have odd indexes,
+	 * otherswise we store the samples defined on the edge.
+	 *
+	 * @param  bool  If arb gradient samples are defined on the center
+	 */
+	inline void SetArbGradCenterSampling(const bool arbGradCenterSampling) { m_isArbGradCenterSampling = arbGradCenterSampling; }
+
+	/**
 	 * @brief Lookup the custom definition
 	 *
 	 * Search the list of user-specified definitions through the [DEFINITIONS] section.
@@ -1101,6 +1112,7 @@ class ExternalSequence
 
 	std::map<std::string,int> m_fileIndex;     /**< @brief File location of sections, [RF], [ADC] etc */
 	std::set<int> m_fileSections;              /**< @brief File location of sections and EOF additionally */
+	bool m_isArbGradCenterSampling;            /**< @brief Expected arbitrary samples are defined on raster center is oversampling, true by default */
 
 	// Low level sequence blocks
 	std::vector<EventIDs> m_blocks;            /**< @brief List of sequence blocks */
